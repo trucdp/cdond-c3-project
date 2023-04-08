@@ -1,5 +1,6 @@
 version: 2.1
-
+orbs:
+  slack: circleci/slack@4.12.1
 # commands:
 #   destroy-environment:
 #     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -47,7 +48,11 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
-
+      - slack/notify:
+          branch_pattern: .+
+          event: fail
+          channel: $SLACK_DEFAULT_CHANNEL
+          template: basic_fail_1
   build-backend:
     docker:
       - image: circleci/node:13.8.0
@@ -64,6 +69,11 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
+      - slack/notify:
+          branch_pattern: .+
+          event: fail
+          channel: $SLACK_DEFAULT_CHANNEL
+          template: basic_fail_1
 
   test-frontend:
     docker:
@@ -78,6 +88,11 @@ jobs:
             cd ./frontend
             npm install
             npm run test 
+      - slack/notify:
+          branch_pattern: .+
+          event: fail
+          channel: $SLACK_DEFAULT_CHANNEL
+          template: basic_fail_1
             
   test-backend:
     docker:
@@ -91,6 +106,11 @@ jobs:
           command: |
             cd ./backend
             npm run test     
+      - slack/notify:
+          branch_pattern: .+
+          event: fail
+          channel: $SLACK_DEFAULT_CHANNEL
+          template: basic_fail_1
   scan-frontend:
     docker:
       - image: circleci/node:13.8.0
@@ -102,7 +122,12 @@ jobs:
           name: Front-end scan
           command: |
             cd ./frontend
-            npm audit --audit-level=critical
+            npm audit fix --audit-level=critical
+      - slack/notify:
+          branch_pattern: .+
+          event: fail
+          channel: $SLACK_DEFAULT_CHANNEL
+          template: basic_fail_1
   scan-backend:
     docker:
       - image: circleci/node:13.8.0
@@ -114,7 +139,12 @@ jobs:
           name: Back-end scan
           command: |
             cd ./backend
-            npm audit --audit-level=critical
+            npm audit fix --audit-level=critical
+      - slack/notify:
+          branch_pattern: .+
+          event: fail
+          channel: $SLACK_DEFAULT_CHANNEL
+          template: basic_fail_1
 
 #   deploy-infrastructure:
 #     docker:
