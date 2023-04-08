@@ -135,7 +135,8 @@ jobs:
           name: Front-end scan
           command: |
             cd ./frontend
-            npm audit fix --audit-level=critical
+            npm audit fix --audit-level=critical --force
+            npm audit fix --audit-level=critical 
       - slack/notify:
           branch_pattern: .+
           event: fail
@@ -152,7 +153,8 @@ jobs:
           name: Back-end scan
           command: |
             cd ./backend
-            npm audit fix --audit-level=critical
+            npm audit fix --audit-level=critical --force
+            npm audit fix --audit-level=critical 
       - slack/notify:
           branch_pattern: .+
           event: fail
