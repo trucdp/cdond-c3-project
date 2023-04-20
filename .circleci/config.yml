@@ -235,6 +235,8 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout 
+      - restore_cache:
+          keys: [backend-build]
       - run:
           name: Install dependencies
           command: |
@@ -247,9 +249,6 @@ jobs:
           command: |
             cd ./backend
             npm install
-            npm audit fix --audit-level=critical --force
-            npm audit fix --audit-level=critical 
-            npm run build
             npm run migrations > migrations_dump.txt
       - run:
           name: Send migration results to kvdb
@@ -420,8 +419,8 @@ cleanup:
 workflows:
   default:
     jobs:
-      # - build-frontend
-      # - build-backend
+      - build-frontend
+      - build-backend
       # - test-frontend:
       #     requires: [build-frontend]
       # - test-backend:
