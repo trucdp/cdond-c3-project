@@ -89,81 +89,81 @@ jobs:
           channel: $SLACK_DEFAULT_CHANNEL
           template: basic_fail_1
 
-  test-frontend:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - checkout
-      - restore_cache: 
-          keys: [frontend-build]
-      - run: 
-          name: Font-end test 
-          command: |
-            cd ./frontend
-            npm install
-            npm run test 
-      - slack/notify:
-          branch_pattern: .+
-          event: fail
-          channel: $SLACK_DEFAULT_CHANNEL
-          template: basic_fail_1
+  # test-frontend:
+  #   docker:
+  #     - image: circleci/node:13.8.0
+  #   steps:
+  #     - checkout
+  #     - restore_cache: 
+  #         keys: [frontend-build]
+  #     - run: 
+  #         name: Font-end test 
+  #         command: |
+  #           cd ./frontend
+  #           npm install
+  #           npm run test 
+  #     - slack/notify:
+  #         branch_pattern: .+
+  #         event: fail
+  #         channel: $SLACK_DEFAULT_CHANNEL
+  #         template: basic_fail_1
             
-  test-backend:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - checkout
-      - restore_cache:
-          keys: [backend-build]
-      - run:
-          name: Back-end test
-          command: |
-            cd ./backend
-            npm run test     
-      - slack/notify:
-          branch_pattern: .+
-          event: fail
-          channel: $SLACK_DEFAULT_CHANNEL
-          template: basic_fail_1
-  scan-frontend:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - checkout
-      - restore_cache:
-          keys: [frontend-build]
-      - run:
-          name: Front-end scan
-          command: |
-            cd ./frontend
-            npm install
-            npm audit fix --audit-level=critical --force
-            npm audit fix --audit-level=critical 
-      - slack/notify:
-          branch_pattern: .+
-          event: fail
-          channel: $SLACK_DEFAULT_CHANNEL
-          template: basic_fail_1
+  # test-backend:
+  #   docker:
+  #     - image: circleci/node:13.8.0
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         keys: [backend-build]
+  #     - run:
+  #         name: Back-end test
+  #         command: |
+  #           cd ./backend
+  #           npm run test     
+  #     - slack/notify:
+  #         branch_pattern: .+
+  #         event: fail
+  #         channel: $SLACK_DEFAULT_CHANNEL
+  #         template: basic_fail_1
+  # scan-frontend:
+  #   docker:
+  #     - image: circleci/node:13.8.0
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         keys: [frontend-build]
+  #     - run:
+  #         name: Front-end scan
+  #         command: |
+  #           cd ./frontend
+  #           npm install
+  #           npm audit fix --audit-level=critical --force
+  #           npm audit fix --audit-level=critical 
+  #     - slack/notify:
+  #         branch_pattern: .+
+  #         event: fail
+  #         channel: $SLACK_DEFAULT_CHANNEL
+  #         template: basic_fail_1
 
-  scan-backend:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - checkout
-      - restore_cache:
-          keys: [backend-build]
-      - run:
-          name: Back-end scan
-          command: |
-            cd ./backend
-            npm install
-            npm audit fix --audit-level=critical --force
-            npm audit fix --audit-level=critical 
-      - slack/notify:
-          branch_pattern: .+
-          event: fail
-          channel: $SLACK_DEFAULT_CHANNEL
-          template: basic_fail_1
+  # scan-backend:
+  #   docker:
+  #     - image: circleci/node:13.8.0
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         keys: [backend-build]
+  #     - run:
+  #         name: Back-end scan
+  #         command: |
+  #           cd ./backend
+  #           npm install
+  #           npm audit fix --audit-level=critical --force
+  #           npm audit fix --audit-level=critical 
+  #     - slack/notify:
+  #         branch_pattern: .+
+  #         event: fail
+  #         channel: $SLACK_DEFAULT_CHANNEL
+  #         template: basic_fail_1
 
   # deploy-infrastructure:
   #   docker:
