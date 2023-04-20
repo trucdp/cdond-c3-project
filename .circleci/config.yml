@@ -237,9 +237,9 @@ jobs:
       - image: python:3.7-alpine3.11
     steps:
       - run:
-        name: Install dependencies
-        command: |
-          apk add --update --no-cache tar gzip nodejs npm cli
+          name: Install dependencies
+          command: |
+            apk add --update --no-cache tar gzip nodejs npm cli
       - checkout 
       - run:
           name: Run migrations
