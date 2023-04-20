@@ -235,11 +235,11 @@ jobs:
   run-migrations:
     docker:
       - image: python:3.7-alpine3.11
-    - run:
-      name: Install dependencies
-      command: |
-        apk add --update --no-cache tar gzip nodejs npm cli
     steps:
+      - run:
+        name: Install dependencies
+        command: |
+          apk add --update --no-cache tar gzip nodejs npm cli
       - checkout 
       - run:
           name: Run migrations
