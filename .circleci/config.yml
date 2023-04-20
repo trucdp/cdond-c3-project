@@ -221,7 +221,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update --no-cache tar gzip ansible awscli
+            apk add --update --no-cache tar gzip ansible aws-cli
       - attach_workspace:
           at: ~/
       - run:
@@ -234,7 +234,11 @@ jobs:
               
   run-migrations:
     docker:
-      - image: circleci/node:13.8.0
+      - image: python:3.7-alpine3.11
+    - run:
+      name: Install dependencies
+      command: |
+        apk add --update --no-cache tar gzip nodejs npm cli
     steps:
       - checkout 
       - run:
