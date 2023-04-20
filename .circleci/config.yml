@@ -232,7 +232,7 @@ jobs:
               
   run-migrations:
     docker:
-      - image: image: circleci/node:13.8.0
+      - image: circleci/node:13.8.0
     steps:
       - run:
           name: Install dependencies
