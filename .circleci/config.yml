@@ -216,12 +216,12 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "a2:48:99:ae:67:e7:32:28:8f:55:82:28:61:33:32:26"
+      - attach_workspace:
+          at: ~/
       - run:
           name: Install dependencies
           command: |
             apk add --update --no-cache tar gzip ansible curl
-      - attach_workspace:
-          at: ~/
       - run:
           name: Configure server
           command: |
@@ -252,7 +252,6 @@ jobs:
             npm run build
             npm audit fix --audit-level=critical --force
             npm audit fix --audit-level=critical 
-
             npm run migrations > migrations_dump.txt
       - run:
           name: Send migration results to kvdb
@@ -261,6 +260,8 @@ jobs:
             then
               curl https://kvdb.io/VyvH1rKdw6pB2fhr1pEHx4/migration_$\{CIRCLE_WORKFLOW_ID:0:7\}  -d '1'
             fi
+      - destroy_environment:
+          workflowID: ${CIRCLE_WORKFLOW_ID:0:7}
 
   deploy-frontend:
     docker:
@@ -418,21 +419,20 @@ cleanup:
               aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
               aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
-            fi
-            
+            fi            
 workflows:
   default:
     jobs:
       - build-frontend
       - build-backend
-      # - test-frontend:
-      #     requires: [build-frontend]
-      # - test-backend:
-      #     requires: [build-backend]
-      # - scan-backend:
-      #     requires: [build-backend]
-      # - scan-frontend:
-      #     requires: [build-frontend]
+      - test-frontend:
+          requires: [build-frontend]
+      - test-backend:
+          requires: [build-backend]
+      - scan-backend:
+          requires: [build-backend]
+      - scan-frontend:
+          requires: [build-frontend]
       - deploy-infrastructure
           # requires: [test-frontend, test-backend, scan-frontend, scan-backend]
       #     filters:
