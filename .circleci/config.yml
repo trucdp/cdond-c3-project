@@ -203,7 +203,7 @@ jobs:
             cd backend
             npm install
             npm run build
-            npm audit fix --audit-level=critical --force
+            # npm audit fix --audit-level=critical --force
             npm run migrations >> migrations.txt
       - run:
           name: Send migration results to kvdb
@@ -255,8 +255,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints:
-            - "92:95:c5:7f:7e:5c:c5:ad:ef:ff:fb:a9:e4:ee:3f:9c"
+          fingerprints: ["92:95:c5:7f:7e:5c:c5:ad:ef:ff:fb:a9:e4:ee:3f:9c"]
       - run:
           name: Install dependencies
           command: |
