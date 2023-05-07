@@ -32,5 +32,5 @@
   become: yes
   shell: |
     pm2 delete all
-    npm install
+    # npm install
     pm2 start npm -- start
