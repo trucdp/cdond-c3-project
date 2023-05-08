@@ -1,19 +1,20 @@
- 1- URL01 
+1- URL01 
 A public git repository with my project code 
-URL01:https://github.com/trucdp/udapeople-
+URL01: https://github.com/trucdp/cdond-c3-project
 
 2- URL02
 Evidence of deployed and functioning front-end application in an S3 bucket
-URL02:
+URL02: http://udapeople-8496055.s3-website-us-east-1.amazonaws.com/#/employees
 
 3- URL03
 Evidence of deployed and functioning front-end application in CloudFront
-URL03:
+URL03: http://d3f8njzx5z14ta.cloudfront.net
 
 4- URL04
 Evidence of healthy back-end application
-URL04:
+URL04: http://ec2-3-82-21-209.compute-1.amazonaws.com:3030
 
 5- URL05
 Evidence of Prometheus Server
-URL05:
+URL05: http://ec2-204-236-247-190.compute-1.amazonaws.com:9090/
+
